@@ -4,6 +4,8 @@ import math
 from functools import reduce
 from pathlib import Path
 from typing import Literal
+import matplotlib.pyplot as plt
+import numpy as np
 
 import fitfile
 import folium
@@ -120,10 +122,8 @@ class RunningActivity:
             / f"{self._activity.activity_id}_ACTIVITY.fit"
         )
 
-    TILES = Literal["Stamen Watercolor", "OpenStreetMap", "Stamen Terrain", "Stamen Toner"]
-
     def create_map(self,
-                   tiles: TILES = "Stamen Watercolor",
+                   tiles: Literal["Stamen Watercolor", "OpenStreetMap", "Stamen Terrain", "Stamen Toner"] = "Stamen Watercolor",
                    png_enabled: bool = False,
                    ) -> folium.Map:
         """Creates a folium map
@@ -204,3 +204,22 @@ class RunningActivity:
             ]
         )
         return running_map
+
+
+    def create_zone_plot(self):
+        x = 0.5 + np.arange(5)
+        y = [self._calc_pct_in_zone(self._activity.hrz_1_time),
+             self._calc_pct_in_zone(self._activity.hrz_2_time),
+             self._calc_pct_in_zone(self._activity.hrz_3_time),
+             self._calc_pct_in_zone(self._activity.hrz_4_time),
+             self._calc_pct_in_zone(self._activity.hrz_5_time)
+             ]
+
+        fig, ax = plt.subplots()
+        color = ['grey', 'green', 'yellow', 'orange', 'red']
+        labels = [f'{data:.2f}' for data in y]
+
+        p = ax.bar(x, y, width=1, edgecolor="white", linewidth=0.7, color=color)
+        ax.bar_label(p, labels=labels, label_type='center', color='black')
+
+        return plt.show()
