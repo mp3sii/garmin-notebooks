@@ -1,0 +1,7 @@
+garmindb==3.*
+pandas==2.*
+snakemd==2.*
+SQLAlchemy-=2.*
+folium~=0.14
+fitfile==1.*
+selenium==4.*
