@@ -19,3 +19,8 @@ garmindb_cli --download --import -al
 ```
 
 Use the notebook
+
+
+## Sample
+![Summary](./resources/img/running_summary.png)
+![Map](./resources/img/running_map.png)
